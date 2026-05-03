@@ -1,0 +1,20 @@
+apiVersion: kubocd.kubotal.io/v1alpha1
+kind: Release
+metadata:
+  name: airflow
+  namespace: okdp-system
+spec:
+  package:
+    repository: quay.io/kubotal/packages-dev/airflow
+    tag: 0.1.0
+  contexts:
+    - name: default
+      namespace: kubocd-system
+  targetNamespace: airflow
+  createNamespace: true
+  parameters:
+    executor: "KubernetesExecutor"
+    dagsGitRepo: ""
+    dagsGitBranch: "main"
+    schedulerMemory: "1Gi"
+    webserverMemory: "1Gi"
