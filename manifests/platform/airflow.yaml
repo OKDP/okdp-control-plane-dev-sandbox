@@ -5,7 +5,7 @@ metadata:
   namespace: okdp-system
 spec:
   package:
-    repository: quay.io/kubotal/packages-dev/airflow
+    repository: quay.io/okdp/packages-dev/airflow
     tag: 0.1.0
   contexts:
     - name: default
