@@ -12,7 +12,7 @@ This sandbox spins up a local Kubernetes (Kind) cluster with the essential compo
     *   *Tested with: `v1.32.2`*
 *   [Flux CLI](https://fluxcd.io/flux/installation/)
     *   *Tested with: `v2.6.1`*
-*   `kubocd` (Optional, for building packages)
+*   `kubocd` CLI (Optional, for building packages)
 
 ## 2. Quick Start
 

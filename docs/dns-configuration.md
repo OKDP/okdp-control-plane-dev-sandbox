@@ -6,7 +6,7 @@ This setup lets you skip editing `/etc/hosts` every time a new service is added.
 
 ## Resolver Configuration (macOS / Linux)
 
-Create (or edit) `/etc/resolver/okdp.dev-sandbox` to route every `.okdp.dev-sandbox` query to the local DNS server.
+Create (or edit) `/etc/resolver/okdp.dev-sandbox` to route every `*.okdp.dev-sandbox` query to the local DNS server.
 
 **File: `/etc/resolver/okdp.dev-sandbox`**
 
