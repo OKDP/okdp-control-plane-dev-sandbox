@@ -151,37 +151,29 @@ Vault ships with an Ingress and is available at:
 *   **URL**: `https://vault.okdp.dev-sandbox`
 *   **Mode**: Dev (default root token)
 
-## 4. Local Development
+## 4. Deploy the OKDP Control Plane (server + UI)
 
-This sandbox provides the base infrastructure (Kubernetes + OIDC) needed to develop the platform's other components.
+The control plane (server + console) is not bundled in this sandbox; it is
+deployed from its own Helm charts on top of the infrastructure above. The
+`okdp-app` OIDC client and the kubauth CORS origin were already provisioned in
+step 2.B (they point at the console ingress host), so the console login works
+out of the box.
 
-*   **Backend (`okdp-control-plane-server`)**:
-
-    If you haven't already, clone the repo:
-    `https://github.com/OKDP/okdp-control-plane-server.git`
-
-    ```bash
-    cd okdp-control-plane-server
-
-    # Point kubectl at the cluster (Kind)
-    kind get kubeconfig --name okdp-dev > ~/.kube/okdp-dev-config
-    export KUBECONFIG=~/.kube/okdp-dev-config
-
-    # Start the server
-    go run cmd/server/main.go
-    ```
-    > The server listens on `http://localhost:8093`.
-
-*   **Frontend (`okdp-control-plane-ui`)**:
-
-    If you haven't already, clone the repo:
-    `https://github.com/OKDP/okdp-control-plane-ui.git`
+1.  Deploy the **server** (image tag defaults to the chart version):
 
     ```bash
-    cd okdp-control-plane-ui
-    npm install
-    npm start
+    helm install okdp-server oci://quay.io/okdp/charts/okdp-server -n okdp-system
     ```
-    > The app is available at `http://localhost:4200`.
+
+2.  Deploy the **console (UI)**. Its ingress routes `/api` to the server Service
+    and `/` to the console, so the browser stays same-origin:
+
+    ```bash
+    helm install okdp-ui oci://quay.io/okdp/charts/okdp-ui -n okdp-system \
+      --set ingress.host=console.okdp.dev-sandbox \
+      --set backend.service=okdp-server
+    ```
+
+3.  Open the console at **https://console.okdp.dev-sandbox**.
 
     💡 **Login:** use `useradmin` / `password` (created in step 2.C).
